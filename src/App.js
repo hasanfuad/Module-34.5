@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react';
+import Countries from "./components/Countries";
+
 
 function App() {
-  const [countries, SetCountries] = useState([]);
+  const [countries, setCountries] = useState([]);
 
-  useEffect(()=>{
+    useEffect(()=>{
     fetch('https://restcountries.eu/rest/v2/all')
     .then(res => res.json())
-    .then(data => SetCountries(data))
+    .then(data => setCountries(data)) 
     .catch(err => console.log(err))
   },[])
+  
   return (
     <div className="App">
-      <h1>Country name: {countries.length}</h1>
+    <h1>Country name: {countries.length}</h1>
       {
-        countries.map(country => <h4>{country.name}</h4>)
+      countries.map(country => <Countries countryName={country} key={country.alpha3Code}/>)
       }
     </div>
   );
